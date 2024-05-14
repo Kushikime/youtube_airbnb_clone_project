@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  @apply w-full  my-1 px-4 py-2 rounded-md;
+  outline: none;
+}
+
+input::placeholder {
+  font-family: "Manrope";
+  font-size: 16px;
+}
+
+button {
+  @apply bg-gray-300;
+}
+
+button.primary {
+  @apply bg-primary p-2 w-full text-white rounded-full;
+}
+
+* {
+  box-sizing: border-box !important;
+}
+
+html,
+body,
+#root {
+  @apply h-full;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Manrope";
+}
