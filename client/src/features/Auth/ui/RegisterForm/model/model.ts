@@ -7,12 +7,14 @@ const emailRegex = new RegExp(
 );
 
 interface RegisterFormFields {
+  name: string;
   email: string;
   password: string;
   repeatPassword: string;
 }
 
 const registerValidationSchema = object({
+  name: string().required("Please enter your name").default(""),
   email: string()
     .required("Please enter your email")
     .matches(emailRegex, "Please enter a valid email")

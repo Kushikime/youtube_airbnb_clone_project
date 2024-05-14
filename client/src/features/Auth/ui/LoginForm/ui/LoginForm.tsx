@@ -30,7 +30,9 @@ const LoginForm: FC<ILoginFormProps> = ({ changeFormState }) => {
 
   return (
     <>
-      <h1 className="text-4xl text-center mb-4 font-semibold">Login</h1>
+      <h1 className="text-4xl text-center mb-4 font-semibold ffpoppins">
+        Login
+      </h1>
       <form
         className="flex flex-col gap-2"
         onSubmit={handleSubmit(onLoginSubmit)}

@@ -17,7 +17,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({ changeFormState }) => {
     register,
     formState: { errors },
   } = useForm<RegisterFormFields>({
-    defaultValues: { email: "", password: "", repeatPassword: "" },
+    defaultValues: { email: "", password: "", repeatPassword: "", name: "" },
     resolver: yupResolver(registerValidationSchema),
   });
 
@@ -25,14 +25,27 @@ const RegisterForm: FC<IRegisterFormProps> = ({ changeFormState }) => {
     console.log("data: ", data);
   };
 
+  const nameError = errors?.name?.message;
   const emailError = errors?.email?.message;
   const passwordError = errors?.password?.message;
   const repeatPasswordError = errors?.repeatPassword?.message;
 
   return (
     <>
-      <h1 className="text-4xl text-center mb-4 font-semibold">Register</h1>
-      <form className="flex flex-col gap-2" onSubmit={handleSubmit(onRegisterSubmit)}>
+      <h1 className="text-4xl text-center mb-4 font-semibold ffpoppins">
+        Register
+      </h1>
+      <form
+        className="flex flex-col gap-2"
+        onSubmit={handleSubmit(onRegisterSubmit)}
+      >
+        <IconInput
+          type="text"
+          placeholder="Your name"
+          icon={<UserIcon className="text-gray-300 w-4 h-4" />}
+          errorMessage={nameError}
+          {...register("name")}
+        />
         <IconInput
           type="email"
           placeholder="Email"
