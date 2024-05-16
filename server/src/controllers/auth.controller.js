@@ -1,37 +1,35 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const models = require("../models");
+const { errorHandler } = require("../util");
+const { HttpError } = require("../error");
 
-const signup = async (req, res) => {
+const signup = errorHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    const userDoc = models.User({
-      email,
-      password: await argon2.hash(password),
-    });
+  throw new HttpError(400, "Something huevo");
 
-    const refreshTokenDoc = models.RefreshToken({
-      owner: userDoc.id,
-    });
+  const userDoc = models.User({
+    email,
+    password: await argon2.hash(password),
+  });
 
-    await userDoc.save();
-    await refreshTokenDoc.save();
+  const refreshTokenDoc = models.RefreshToken({
+    owner: userDoc.id,
+  });
 
-    const refreshToken = createRefreshToken(userDoc.id, refreshTokenDoc.id);
-    const accessToken = createAccessToken(userDoc.id);
+  await userDoc.save();
+  await refreshTokenDoc.save();
 
-    res.json({
-      id: userDoc.id,
-      accessToken,
-      refreshToken,
-    });
-  } catch (error) {
-    res.json({
-      error,
-    });
-  }
-};
+  const refreshToken = createRefreshToken(userDoc.id, refreshTokenDoc.id);
+  const accessToken = createAccessToken(userDoc.id);
+
+  return {
+    id: userDoc.id,
+    accessToken,
+    refreshToken,
+  };
+});
 
 const createAccessToken = (userId) => {
   return jwt.sign(

@@ -6,15 +6,28 @@ const { connectToDatabase } = require("./db");
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use("/api", routes);
+
+// Error handler
+app.use((err, req, res, next) => {
+  // Note the addition of 'next'
+  console.log("123123132");
+  logger.error(err.stack);
+  res.status(err.statusCode || 500).json({ error: err.message });
+});
+
 const startServer = async () => {
-  await connectToDatabase();
-  app.use(express.json());
+  try {
+    await connectToDatabase();
 
-  app.use("/api", routes);
-
-  app.listen(port, () => {
-    logger.info(`Server listening at http://localhost:${port}`);
-  });
+    app.listen(port, () => {
+      logger.info(`Server listening at http://localhost:${port}`);
+    });
+  } catch (err) {
+    logger.error("Failed to connect to the database", err);
+    process.exit(1); // Exit the process if the database connection fails
+  }
 };
 
 module.exports = startServer;
