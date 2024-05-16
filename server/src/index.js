@@ -11,8 +11,6 @@ app.use("/api", routes);
 
 // Error handler
 app.use((err, req, res, next) => {
-  // Note the addition of 'next'
-  console.log("123123132");
   logger.error(err.stack);
   res.status(err.statusCode || 500).json({ error: err.message });
 });

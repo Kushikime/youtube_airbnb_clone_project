@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const controllers = require("../controllers");
-const tmp = (req, res) => {};
 
 router.post("/signup", controllers.authController.signup);
-router.post("/login", tmp);
-router.post("/logout", tmp);
-router.post("/accessToken", tmp);
-router.post("/refreshToken", tmp);
+router.post("/login", controllers.authController.login);
+router.post("/logout", controllers.authController.logout);
+router.post("/logoutall", controllers.authController.logoutAll);
+router.post("/accessToken", controllers.authController.newAccessToken);
+router.post("/refreshToken", controllers.authController.newRefreshToken);
 
 module.exports = router;
